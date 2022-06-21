@@ -1,5 +1,5 @@
 import React from 'react';
-import {View, Button} from 'react-native';
+import {View, Button, Alert} from 'react-native';
 import {launchImageLibrary} from 'react-native-image-picker';
 
 const options = {
@@ -33,7 +33,22 @@ const App = () => {
     });
     let responseJson = await res.json();
     console.log(responseJson, 'responseJson');
+    createTwoButtonAlert();
   };
+
+  const createTwoButtonAlert = () =>
+      Alert.alert(
+          "Success!",
+          "Your Image has been Uploaded!",
+          [
+            {
+              text: "Cancel",
+              onPress: () => console.log("Cancel Pressed"),
+              style: "cancel"
+            },
+            { text: "OK", onPress: () => console.log("OK Pressed") }
+          ]
+      );
 
   return (
     <View
