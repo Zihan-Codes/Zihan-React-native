@@ -15,6 +15,7 @@ const options = {
 };
 
 const App = () => {
+
   const openGallery = async () => {
     const images = await launchImageLibrary(options);
     console.log(images);
@@ -24,6 +25,7 @@ const App = () => {
       type: images.assets[0].type,
       name: images.assets[0].fileName,
     });
+
     let res = await fetch('http://10.0.2.2:8000/api/fileupload', {
       method: 'post',
       body: formdata,
@@ -31,6 +33,7 @@ const App = () => {
         'Content-Type': 'multipart/form-data',
       },
     });
+
     let responseJson = await res.json();
     console.log(responseJson, 'responseJson');
     createTwoButtonAlert();
@@ -60,6 +63,7 @@ const App = () => {
       <Button title="Uploads" onPress={openGallery} />
     </View>
   );
+
 };
 
 export default App;
