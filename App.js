@@ -18,8 +18,18 @@ const App = () => {
 
   const openGallery = async () => {
     const images = await launchImageLibrary(options);
-    console.log(images);
-    const formdata = new FormData();
+    console.log(images.assets[0].type);
+      if (!images.assets[0].type.match("image/png")) {
+          if (!images.assets[0].type.match("image/jpeg")){
+              if (!images.assets[0].type.match("image/jpg")) {
+                  let uploadfail =  new createTwoButtonAlert("Upload Failed!","The Image format is not in png/jpg/jpeg format!");
+                  uploadfail;
+                  return false;
+              }
+          }
+      }
+
+      const formdata = new FormData();
     formdata.append('file', {
       uri: images.assets[0].uri,
       type: images.assets[0].type,
@@ -33,16 +43,16 @@ const App = () => {
         'Content-Type': 'multipart/form-data',
       },
     });
-
+    let buttonalert =  new createTwoButtonAlert("Success","Your Image has been Uploaded!");
+    buttonalert;
     let responseJson = await res.json();
     console.log(responseJson, 'responseJson');
-    createTwoButtonAlert();
   };
 
-  const createTwoButtonAlert = () =>
+  const createTwoButtonAlert = (message1, message2) =>
       Alert.alert(
-          "Success!",
-          "Your Image has been Uploaded!",
+          message1,
+          message2,
           [
             {
               text: "Cancel",
@@ -56,7 +66,7 @@ const App = () => {
   return (
     <View
       style={{
-        flex: 1,
+        flex: 20,
         alignItems: 'center',
         justifyContent: 'center',
       }}>
