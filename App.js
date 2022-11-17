@@ -1,79 +1,88 @@
-import React from 'react';
-import {View, Button, Alert} from 'react-native';
-import {launchImageLibrary} from 'react-native-image-picker';
+/**
+ * Sample React Native App
+ * https://github.com/facebook/react-native
+ *
+ * @format
+ * @flow strict-local
+ */
 
-const options = {
-  title: 'Select Image',
-  type: 'library',
-  options: {
-    maxHeight: 200,
-    maxWidth: 200,
-    selectionLimit: 1,
-    mediaType: 'photo',
-    includeBase64: false,
-  },
-};
-
-const App = () => {
-
-  const openGallery = async () => {
-    const images = await launchImageLibrary(options);
-    console.log(images.assets[0].type);
-      if (!images.assets[0].type.match("image/png")) {
-          if (!images.assets[0].type.match("image/jpeg")){
-              if (!images.assets[0].type.match("image/jpg")) {
-                  let uploadfail =  new createTwoButtonAlert("Upload Failed!","The Image format is not in png/jpg/jpeg format!");
-                  uploadfail;
-                  return false;
-              }
-          }
-      }
-
-      const formdata = new FormData();
-    formdata.append('file', {
-      uri: images.assets[0].uri,
-      type: images.assets[0].type,
-      name: images.assets[0].fileName,
-    });
-
-    let res = await fetch('http://10.0.2.2:8000/api/fileupload', {
-      method: 'post',
-      body: formdata,
-      headers: {
-        'Content-Type': 'multipart/form-data',
-      },
-    });
-    let buttonalert =  new createTwoButtonAlert("Success","Your Image has been Uploaded!");
-    buttonalert;
-    let responseJson = await res.json();
-    console.log(responseJson, 'responseJson');
-  };
-
-  const createTwoButtonAlert = (message1, message2) =>
-      Alert.alert(
-          message1,
-          message2,
-          [
-            {
-              text: "Cancel",
-              onPress: () => console.log("Cancel Pressed"),
-              style: "cancel"
-            },
-            { text: "OK", onPress: () => console.log("OK Pressed") }
-          ]
-      );
-
-  return (
-    <View
-      style={{
-        flex: 20,
-        alignItems: 'center',
-        justifyContent: 'center',
-      }}>
-      <Button title="Uploads" onPress={openGallery} />
-    </View>
-  );
-
-};
-
-export default App;
+ import React from 'react';
+ import type {Node} from 'react';
+ import {
+   SafeAreaView,
+   ScrollView,
+   StatusBar,
+   StyleSheet,
+   Text,
+   useColorScheme,
+   View,
+ } from 'react-native';
+ 
+ 
+ 
+ 
+ import {NavigationContainer} from "@react-navigation/native";
+ import {createNativeStackNavigator} from "@react-navigation/native-stack"
+ 
+ import Page1 from './android/app/src/screens/Page1';
+ import LoginScreen from './android/app/src/screens/LoginScreen';
+ import dashboard from './android/app/src/screens/dashboard';
+ import front from './android/app/src/zihan/front';
+ import Names from './android/app/src/zihan/Showname';
+ import Driver2 from './android/app/src/zihan/Request';
+ import Uload from './android/app/src/zihan/Userloading';
+ import Route from './android/app/src/zihan/Route';
+ import User from './android/app/src/zihan/Uhome';
+ import Payment from './android/app/src/vithurshan/Payment';
+ import Order from './android/app/src/zihan/Order';
+ import Method from './android/app/src/vithurshan/Method';
+ import History from './android/app/src/zihan/History';
+ import Cash from './android/app/src/zihan/cash';
+ import Dhome from './android/app/src/zihan/Driverhome';
+ import Dmap from './android/app/src/zihan/Drivermap';
+ import Mydetails from './android/app/src/zihan/historydetails';
+ import Payment2 from './android/app/src/vithurshan/Payment2';
+ import Loader from './android/app/src/zihan/Loading2';
+ 
+ 
+ const Stack = createNativeStackNavigator();
+ 
+ 
+ const App: () => Node = () => {
+   
+   return (
+    
+       <NavigationContainer>
+       <Stack.Navigator screenOptions={{
+     headerShown: false
+   }} initialRouteName='login'>
+         
+         <Stack.Screen name='Home' component={Page1} />
+         <Stack.Screen name='login' component={LoginScreen} />
+         <Stack.Screen name='welcome' component={front} />
+         <Stack.Screen name='OrderList' component={Names} />
+         <Stack.Screen name='Request' component={Driver2} />
+         <Stack.Screen name='Loading' component={Uload} />
+         <Stack.Screen name='Route' component={Route} />
+         <Stack.Screen name='User' component={User} />
+         <Stack.Screen name='Payment' component={Payment} />
+         <Stack.Screen name='Order' component={Order} />
+         <Stack.Screen name='Method' component={Method} />
+         <Stack.Screen name='history' component={History} />
+         <Stack.Screen name='cash' component={Cash} />
+         <Stack.Screen name='dhome' component={Dhome} />
+         <Stack.Screen name='Dmap' component={Dmap} />
+         <Stack.Screen name='Mydetails' component={Mydetails} />
+         <Stack.Screen name='Pay2' component={Payment2} />
+         <Stack.Screen name='Load' component={Loader} />
+         
+         
+       </Stack.Navigator>
+     </NavigationContainer>
+    
+   );
+ };
+ 
+ 
+ export default App;
+ 

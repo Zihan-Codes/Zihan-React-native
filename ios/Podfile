@@ -19,6 +19,8 @@ target 'RNFile' do
     :app_path => "#{Pod::Config.instance.installation_root}/.."
   )
 
+  pod 'lottie-react-native', :path => '../node_modules/lottie-react-native'
+
   target 'RNFileTests' do
     inherit! :complete
     # Pods for testing
